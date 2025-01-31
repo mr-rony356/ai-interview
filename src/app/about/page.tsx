@@ -1,5 +1,6 @@
 import { Download, FileText, Home, MessageCircle } from "lucide-react";
 import ContactFooter from "../ui/component/contact/contact-footer";
+import Offices from "../ui/component/contact/offices";
 
 export default function About() {
   const features = [
@@ -62,6 +63,8 @@ export default function About() {
           </div>
         </div>
       </section>
+      <Offices />
+
       <ContactFooter />
     </section>
   );

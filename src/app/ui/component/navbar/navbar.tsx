@@ -65,9 +65,9 @@ export default function Navbar() {
                   ]}
                   isOpen={openDropdown === "Products"}
                   setOpenDropdown={setOpenDropdown}
-                />
-                <NavItem href="/contact" label="Contact Us" />
+                />{" "}
                 <NavItem href="/about" label="About Us" />
+                <NavItem href="/contact" label="Contact Us" />
               </ul>
             </div>
           </div>
