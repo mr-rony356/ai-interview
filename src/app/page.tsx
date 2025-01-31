@@ -7,9 +7,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <div className="mt-24 sm:mt-32 md:mt-64 lg:mt-72 xl:mt-80">
-        <TypographyShowcase />
-      </div>
+      <TypographyShowcase />
       <DocumentationLanding />
       <Footer />
     </main>

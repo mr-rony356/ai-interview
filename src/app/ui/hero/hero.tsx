@@ -3,7 +3,7 @@ import DocumentationCarousel from "../component/documentation-carousel";
 export default function Hero() {
   return (
     <div className="relative">
-      <div className="flex min-h-[50vh] flex-col items-center justify-center bg-[#0047CC] px-4 py-16 text-white">
+      <div className="flex min-h-[50vh] md:min-h-[70vh] flex-col items-center justify-center bg-[#0047CC] px-4 pb-16 text-white">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="mb-8 text-xl font-[300] sm:text-4xl max-w-xl ">
             Powerful <span className="font-bold">Documentation</span> and Help
@@ -14,11 +14,7 @@ export default function Hero() {
           </button>
         </div>
       </div>
-      <div className="absolute left-1/2 w-full -translate-x-1/2 transform px-4 sm:px-6 md:px-8 lg:px-10">
-        <div className="relative -mt-16 sm:-mt-24 md:-mt-32 lg:-mt-24">
-          <DocumentationCarousel />
-        </div>
-      </div>
+      <DocumentationCarousel />
     </div>
   );
 }

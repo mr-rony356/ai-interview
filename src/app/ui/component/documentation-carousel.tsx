@@ -5,17 +5,28 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback } from "react";
-
+const services = [
+  {
+    title: "Resume Match",
+    description:
+      "Effortlessly Scan Resumes, build a candidate summary, and review whether the candidate is a good match for the job using our Match Algorithm.",
+    imgSrc: "/images/RG_Logo.png",
+  },
+  {
+    title: "Interview Generator",
+    description:
+      "Build customized interview questions for candidates, and have candidates record their responses via video and audio recording, all while using AI.",
+    imgSrc: "/images/IG_Logo.png",
+  },
+  {
+    title: "Candidate Scoring",
+    description:
+      "Score Candidates on their interviews and responses using AI Models, and compare candidates side by side to pick the right person for the position.",
+    imgSrc: "/images/Scoring_Logo.png",
+  },
+];
 export default function DocumentationCarousel() {
-  const images = [
-    "/layout-1.png",
-    "/layout-2.png",
-    "/layout-3.png",
-    "/layout-4.png",
-    "/layout-5.png",
-  ];
-
-  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -26,26 +37,41 @@ export default function DocumentationCarousel() {
   }, [emblaApi]);
 
   return (
-    <div className="relative mx-auto px-4 py-12">
+    <div className="relative mx-auto px-4 -mt-36">
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex sm:col-span-1">
+        <div className="flex col-span-1">
           {/* Search Interface Slide */}
-          {images.map((src, index) => (
-            <div className="relative min-w-0 flex-[0_0_50%]" key={index}>
+          {services.map((service, index) => (
+            <div
+              className="relative flex min-w-max md:min-w-[500px] md:flex-[0_0_50%]"
+              key={index}
+            >
               <div className="relative mx-4 overflow-hidden rounded-sm shadow-lg transition-transform duration-300 hover:-translate-y-4">
-                <Link href="#" className="shadow-lg">
-                  <Image
-                    src={src || "/layout-1.png"}
-                    alt="layout-1"
-                    width={1000}
-                    height={1000}
-                    className="object-cover h-[300px]"
-                  />
-                </Link>
+                <div className="bg-white shadow-lg rounded-lg text-center p-6">
+                  <div className="flex justify-center mb-4">
+                    <Image
+                      src={service.imgSrc}
+                      alt={service.title}
+                      width={80}
+                      height={80}
+                      className="rounded-full bg-blue-500 p-2"
+                    />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{service.description}</p>
+                  <a
+                    href="#"
+                    className="text-blue-500 font-semibold hover:underline"
+                  >
+                    Read More
+                  </a>
+                </div>{" "}
               </div>
             </div>
           ))}
-        </div>
+        </div>{" "}
       </div>
 
       {/* Navigation Buttons */}
