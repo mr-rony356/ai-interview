@@ -1,29 +1,42 @@
 import { NextResponse } from "next/server";
-import axios from "axios";
 
 export async function POST(request: Request) {
-  const { jobDescription } = await request.json();
+  const { resume, job, roundTypes, roundLengths } = await request.json();
+
+  if (!resume || !job) {
+    return NextResponse.json(
+      { error: "Resume and job description are required" },
+      { status: 400 }
+    );
+  }
 
   try {
-    const response = await axios.post(
-      `${process.env.AZURE_OAI_ENDPOINT}/openai/deployments/${process.env.AZURE_OAI_DEPLOYMENT_NAME}/completions?api-version=${process.env.AZURE_OAI_API_VERSION}`,
-      {
-        prompt: `Generate interview questions for the following job description: ${jobDescription}`,
-        max_tokens: 150,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": process.env.AZURE_OAI_API_KEY,
-        },
-      }
-    );
+    const endpoint = process.env.NEXT_PUBLIC_INTERVIEW_SCORING_ENDPOINT;
+    const apiKey = process.env.NEXT_PUBLIC_INTERVIEW_SCORING_API_KEY;
 
-    return NextResponse.json(response.data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to generate questions" },
-      { status: 500 }
-    );
+    const response = await fetch(endpoint!, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        resume,
+        job,
+        roundTypes: roundTypes || [],
+        roundLengths: roundLengths || [],
+        type: "questions",
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to generate questions");
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -64,7 +64,7 @@ export default function Navbar() {
                     },
                     { href: "/job-match", label: "Job Match Summary" },
                     { href: "/interview-lists", label: "Interview Lists" },
-                    { href: "/candidate-lists", label: "Candidate Lists" },
+                    { href: "/candidate-scoring", label: "Candidate Scoring" },
                   ]}
                   isOpen={openDropdown === "Products"}
                   setOpenDropdown={setOpenDropdown}
@@ -79,7 +79,6 @@ export default function Navbar() {
           <div className="hidden lg:flex lg:items-center lg:space-x-8 text-xs uppercase">
             <ul className="flex flex-row items-center space-x-4 p-4 lg:p-0">
               {user ? (
-                
                 <NavDropdown
                   label="Profile"
                   items={[{ href: "/my-candidate", label: "My Candidate" }]}

@@ -50,24 +50,24 @@ export default function InterviewScorer() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Questions (JSON):
+            Questions:
           </label>
           <textarea
             value={questions}
             onChange={(e) => setQuestions(e.target.value)}
-            placeholder='Enter questions as JSON, e.g., ["What is your greatest strength?", "Describe a challenge you faced and how you overcame it."]'
+            placeholder="Enter questions"
             rows={5}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Answers (JSON):
+            Answers:
           </label>
           <textarea
             value={answers}
             onChange={(e) => setAnswers(e.target.value)}
-            placeholder='Enter answers as JSON, e.g., ["My greatest strength is my ability to communicate effectively.", "I once faced a tight deadline and managed it by prioritizing tasks and working extra hours."]'
+            placeholder="Enter answers"
             rows={5}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
