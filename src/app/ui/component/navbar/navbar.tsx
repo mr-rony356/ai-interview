@@ -7,8 +7,11 @@ import { useEffect, useState } from "react";
 import { HamburgerButton } from "./hamburger-button";
 import { NavDropdown } from "./nav-dropdown";
 import { NavItem } from "./nav-item";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Navbar() {
+  const { user, error, isLoading } = useUser();
+
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -75,13 +78,17 @@ export default function Navbar() {
           {/* Right Navigation Items */}
           <div className="hidden lg:flex lg:items-center lg:space-x-8 text-xs uppercase">
             <ul className="flex flex-row items-center space-x-4 p-4 lg:p-0">
-              <NavItem href="/login" label="Login" />
-              <NavDropdown
-                label="Profile"
-                items={[{ href: "/my-candidate", label: "My Candidate" }]}
-                isOpen={openDropdown === "Profile"}
-                setOpenDropdown={setOpenDropdown}
-              />
+              {user ? (
+                
+                <NavDropdown
+                  label="Profile"
+                  items={[{ href: "/my-candidate", label: "My Candidate" }]}
+                  isOpen={openDropdown === "Profile"}
+                  setOpenDropdown={setOpenDropdown}
+                />
+              ) : (
+                <NavItem href="/login" label="Login" />
+              )}
             </ul>
           </div>
         </div>
