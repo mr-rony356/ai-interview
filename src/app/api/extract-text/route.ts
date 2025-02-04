@@ -1,4 +1,10 @@
 import { NextResponse } from "next/server";
+import {
+  AzureKeyCredential,
+  DocumentAnalysisClient,
+} from "@azure/ai-form-recognizer";
+import { DefaultAzureCredential } from "@azure/identity";
+import { Readable } from "stream";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -8,25 +14,31 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
   }
 
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-
   try {
-    const endpoint = process.env.NEXT_PUBLIC_AZURE_ENDPOINT;
-    const apiKey = process.env.NEXT_PUBLIC_AZURE_API_KEY;
+    // Convert the file to a stream
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const stream = Readable.from(buffer);
 
-    const response = await fetch(`${endpoint}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/pdf",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: buffer,
+    // Initialize the Document Analysis Client
+    const credential = new AzureKeyCredential(
+      process.env.NEXT_PUBLIC_AZURE_API_KEY!
+    );
+    const client = new DocumentAnalysisClient(
+      process.env.NEXT_PUBLIC_AZURE_ENDPOINT!, // Your Azure endpoint
+      credential
+    );
+
+    // Analyze the document
+    const poller = await client.beginAnalyzeDocument("prebuilt-read", stream);
+    const { pages } = await poller.pollUntilDone();
+
+    // Return the analysis results
+    return NextResponse.json({
+      pages,
     });
-
-    const data = await response.json();
-    return NextResponse.json(data);
   } catch (error: any) {
+    console.error("Error analyzing document:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

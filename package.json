@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.6.0",
+    "@azure/ai-form-recognizer": "^5.0.0",
+    "@azure/identity": "^4.6.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "embla-carousel-react": "^8.5.2",

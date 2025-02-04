@@ -86,7 +86,7 @@ export default function Navbar() {
                   setOpenDropdown={setOpenDropdown}
                 />
               ) : (
-                <NavItem href="/login" label="Login" />
+                <NavItem href="/api/auth/login" label="Login" />
               )}
             </ul>
           </div>
