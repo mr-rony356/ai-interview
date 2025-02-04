@@ -1,7 +1,7 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { ArrowRight, Link } from "lucide-react";
+import React from "react";
 
-export default function DocumentationLanding() {
+const DocumentationLanding = () => {
   const categories = [
     { title: "Accordions", href: "#accordions" },
     { title: "Alerts", href: "#alerts" },
@@ -15,7 +15,6 @@ export default function DocumentationLanding() {
     { title: "Lists", href: "#lists" },
     { title: "Steps", href: "#steps" },
   ];
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:px-8 mt-20">
       <div className="text-center">
@@ -56,4 +55,6 @@ export default function DocumentationLanding() {
       </div>
     </div>
   );
-}
+};
+
+export default DocumentationLanding;
