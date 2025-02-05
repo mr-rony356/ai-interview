@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import {  ClipboardCheck, ClipboardCopy } from "lucide-react";
 import Prism from "prismjs";
 
 const CardTabComponent = () => {
@@ -64,11 +63,6 @@ const CardTabComponent = () => {
         onClick={handleCopy}
         className="absolute top-2 right-1/2 md:right-4 translate-x-8 p-2 px-4 bg-blue-700 text-white rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out hover:bg-blue-600"
       >
-        {copied ? (
-          <ClipboardCheck className="w-4 h-4 inline-block mr-1" />
-        ) : (
-          <ClipboardCopy className="w-4 h-4 inline-block mr-1" />
-        )}
         {copied ? "Copied!" : "Copy"}
       </button>
     </div>
@@ -100,7 +94,7 @@ const CardTabComponent = () => {
   );
 
   return (
-    <div className="mt-20 mx-20">
+    <div className="mt-20 mx-auto max-w-[1180px] flex justify-center items-center min-h-screen px-2">
       <div className="w-5xl md:w-full grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h1 className="text-3xl mb-2 group inline-block">
