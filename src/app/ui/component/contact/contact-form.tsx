@@ -1,10 +1,71 @@
 "use client";
 
-export default function ContactForm() {
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Form submitted!");
-  };
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import emailjs from "@emailjs/browser";
+import { useState } from "react";
+import Toast from "../../Toast/Toast";
+
+interface ToastType {
+  message: string;
+  type: "success" | "error";
+}
+
+const ContactForm = () => {
+  const [toast, setToast] = useState<ToastType | null>(null);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      surname: "",
+      email: "",
+      message: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Name is required"),
+      surname: Yup.string().required("Surname is required"),
+      email: Yup.string().email("Invalid email").required("Email is required"),
+      message: Yup.string().required("Message is required"),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      const serviceID = "service_pmlwpr1";
+      const templateID = "template_h2mr61w";
+
+      emailjs
+      .send(
+        serviceID,
+        templateID,
+        {
+          to_email: "nurzihad123@gmail.com",
+          from_name: values.name + " " + values.surname,
+          from_email: values.email,
+          message: values.message,
+        },
+        "JTlGKoLBLTifizSId"
+      )
+    
+        .then(
+          (response) => {
+            console.log("Message sent successfully!", response);
+            setToast({
+              message: "Message sent successfully!",
+              type: "success",
+            });
+            resetForm();
+          },
+          (error) => {
+            console.error("Error sending message:", error);
+            setToast({
+              message: "Failed to send message. Please try again.",
+              type: "error",
+            });
+          }
+        );
+    },
+  });
 
   return (
     <main className="min-h-screen bg-[#f8f8f8] px-4 py-16 md:px-6 lg:px-8">
@@ -13,77 +74,88 @@ export default function ContactForm() {
           Get in touch. <span className="font-normal">It's free.</span>
         </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={formik.handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <div className="space-y-2">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium uppercase text-gray-600"
-              >
+              <label className="block text-sm font-medium uppercase text-gray-600">
                 Name
               </label>
-              <input
+              <Input
                 type="text"
                 id="name"
                 placeholder="Name"
-                className="w-full rounded-md border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="text-lg py-6 shadow-sm border border-gray-300 focus:border-transparent focus:ring-0 focus:outline-none"
+                {...formik.getFieldProps("name")}
               />
+              {formik.touched.name && formik.errors.name && (
+                <p className="text-red-500 text-sm">{formik.errors.name}</p>
+              )}
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="surname"
-                className="block text-sm font-medium uppercase text-gray-600"
-              >
+              <label className="block text-sm font-medium uppercase text-gray-600">
                 Surname
               </label>
-              <input
+              <Input
                 type="text"
                 id="surname"
                 placeholder="Surname"
-                className="w-full rounded-md border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="text-lg py-6 shadow-sm border border-gray-300 focus:border-transparent focus:ring-0 focus:outline-none"
+                {...formik.getFieldProps("surname")}
               />
+              {formik.touched.surname && formik.errors.surname && (
+                <p className="text-red-500 text-sm">{formik.errors.surname}</p>
+              )}
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium uppercase text-gray-600"
-              >
+              <label className="block text-sm font-medium uppercase text-gray-600">
                 Email
               </label>
-              <input
+              <Input
                 type="email"
                 id="email"
                 placeholder="Email"
-                className="w-full rounded-sm border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="text-lg py-6 shadow-sm border border-gray-300 focus:border-transparent focus:ring-0 focus:outline-none"
+                {...formik.getFieldProps("email")}
               />
+              {formik.touched.email && formik.errors.email && (
+                <p className="text-red-500 text-sm">{formik.errors.email}</p>
+              )}
             </div>
           </div>
 
           <div className="space-y-2">
-            <label
-              htmlFor="message"
-              className="block text-sm font-medium uppercase text-gray-600"
-            >
+            <label className="block text-sm font-medium uppercase text-gray-600">
               Message
             </label>
-            <textarea
+            <Textarea
               id="message"
               rows={8}
               placeholder="Type your message here ..."
-              className="w-full rounded-md border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="text-lg py-3 h-32 md:h-64"
+              {...formik.getFieldProps("message")}
             />
+            {formik.touched.message && formik.errors.message && (
+              <p className="text-red-500 text-sm">{formik.errors.message}</p>
+            )}
           </div>
 
-          <button
-            type="submit"
-            className="rounded-sm bg-blue-600 px-8 py-4 text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
+          <Button type="submit" className="bg-blue-600 hover:bg-blue-700 py-6">
             Send Message
-          </button>
+          </Button>
         </form>
       </div>
+
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </main>
   );
-}
+};
+
+export default ContactForm;

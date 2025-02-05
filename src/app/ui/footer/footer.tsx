@@ -1,40 +1,41 @@
-"use client";
-
-import { ArrowRight, ChevronDown, ShoppingCart } from "lucide-react";
+"use client"
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Footer() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [language, setLanguage] = useState("English");
+  const [language, setLanguage] = useState("english"); 
 
   return (
     <>
-      {/* Footer */}
-      <footer className="bg-[#151515] text-white py-12">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex  justify-between space-x-10">
-            {/* Logo */}
+      {/* Footer---------------------- */}
+      <footer className="bg-[#151515] text-white py-28">
+        <div className="mx-auto max-w-[1180px] mt-32">
+          <div className="flex flex-col md:flex-row gap-8 px-4 justify-between">
+            {/* Logo-------------- */}
             <div>
               <Link href="/" className="flex items-center">
-                <Image
-                  src="/logo-white.svg"
-                  width={50}
-                  height={50}
-                  alt="logo"
-                />
+                <Image src="/logo-white.svg" width={50} height={50} alt="logo" />
               </Link>
             </div>
 
-            {/* Content */}
-            <div className="">
+            {/* Content---------------- */}
+            <div>
               <p className="mb-6 text-gray-400 text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod <br />
                 tempor incididunt ut labore et dolore magna aliqua.
               </p>
-              <div className="grid grid-cols-2 gap-8">
+              <div className="grid grid-cols-2 gap-8 mt-10">
                 <div>
                   <ul className="space-y-3 text-lg">
                     <li>
@@ -86,8 +87,22 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Language Selector */}
-            <div className="md:col-span-4 lg:col-span-2 md:ml-auto"></div>
+            {/* Language Selector------------ */}
+            <div>
+              <Select value={language} onValueChange={setLanguage}>
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue>{language.charAt(0).toUpperCase() + language.slice(1)}</SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Language</SelectLabel>
+                    <SelectItem value="english">English</SelectItem>
+                    <SelectItem value="french">French</SelectItem>
+                    <SelectItem value="german">German</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
       </footer>
