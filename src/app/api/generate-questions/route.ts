@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const { resume, job, roundTypes, roundLengths } = await request.json();
+  const { resume, job, roundTypes, roundLengths ,type} = await request.json();
 
   if (!resume || !job) {
     return NextResponse.json(
@@ -25,14 +25,10 @@ export async function POST(request: Request) {
         job,
         roundTypes: roundTypes || [],
         roundLengths: roundLengths || [],
-        type: "questions",
+        type:type
       }),
     });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Failed to generate questions");
-    }
 
     const data = await response.json();
     return NextResponse.json(data);

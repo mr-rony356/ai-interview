@@ -63,8 +63,6 @@ export default function Navbar() {
                       label: "Interview Question",
                     },
                     { href: "/job-match", label: "Job Match Summary" },
-                    { href: "/interview-lists", label: "Interview Lists" },
-                    { href: "/candidate-scoring", label: "Candidate Scoring" },
                   ]}
                   isOpen={openDropdown === "Products"}
                   setOpenDropdown={setOpenDropdown}
@@ -80,12 +78,12 @@ export default function Navbar() {
             <ul className="flex flex-row items-center space-x-4 p-4 lg:p-0">
               {user ? (
                 <NavDropdown
-                  label="Profile"
-                  items={[{ href: "/my-candidate", label: "My Candidate" }]}
-                  isOpen={openDropdown === "Profile"}
-                  setOpenDropdown={setOpenDropdown}
-                />
-              ) : (
+                label="Profile"
+                items={[{ href: "/my-candidate", label: "My Candidate" }, { href: "/dashboard", label: "Dashboard" }]}
+                isOpen={openDropdown === "Profile"}
+                setOpenDropdown={setOpenDropdown}
+              />
+            ) : ( 
                 <NavItem href="/api/auth/login" label="Login" />
               )}
             </ul>
