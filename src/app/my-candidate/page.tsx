@@ -50,11 +50,20 @@ function InterviewLists() {
   });
 
   useEffect(() => {
-    const storedCandidates = localStorage.getItem("candidates");
-    if (storedCandidates) {
-      setCandidates(JSON.parse(storedCandidates));
-    }
+    fetchCandidates();
   }, []);
+
+  const fetchCandidates = async () => {
+    try {
+        const response = await fetch("/api/candidates");
+      if (!response.ok) throw new Error("Failed to fetch candidates");
+      const data = await response.json();
+      setCandidates(data);
+    } catch (error) {
+      console.error("Error fetching candidates:", error);
+      // Add error handling UI if needed
+    }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -91,28 +100,42 @@ function InterviewLists() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const updatedCandidates = [...candidates, newCandidate];
-    setCandidates(updatedCandidates);
-    localStorage.setItem("candidates", JSON.stringify(updatedCandidates));
+    try {
+      const response = await fetch("/api/candidates", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newCandidate),
+      });
 
-    // Reset form and close dialog
-    setNewCandidate({
-      id: Date.now(),
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      uploadedBy: "",
-      currentPosition: "",
-      yearsOfExperience: 0,
-      skills: [],
-      resume: "",
-      picture: "",
-      education: [],
-    });
-    setIsDialogOpen(false);
+      if (!response.ok) throw new Error("Failed to add candidate");
+
+      // Refresh the candidates list
+      await fetchCandidates();
+
+      // Reset form and close dialog
+      setNewCandidate({
+        id: Date.now(),
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        uploadedBy: "",
+        currentPosition: "",
+        yearsOfExperience: 0,
+        skills: [],
+        resume: "",
+        picture: "",
+        education: [],
+      });
+      setIsDialogOpen(false);
+    } catch (error) {
+      console.error("Error adding candidate:", error);
+      // Add error handling UI if needed
+    }
   };
 
   return (

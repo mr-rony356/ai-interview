@@ -63,6 +63,7 @@ export default function Navbar() {
                       label: "Interview Question",
                     },
                     { href: "/job-match", label: "Job Match Summary" },
+                    { href: "/job-listings", label: "Job Listings" },
                   ]}
                   isOpen={openDropdown === "Products"}
                   setOpenDropdown={setOpenDropdown}
