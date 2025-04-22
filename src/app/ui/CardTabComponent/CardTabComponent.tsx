@@ -3,13 +3,30 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Briefcase,
+  Users,
+  FileText,
+  CheckCircle,
+  Brain,
+  Sparkles,
+  MessageSquare,
+  ClipboardCheck,
+} from "lucide-react";
 import Prism from "prismjs";
+import "prismjs/themes/prism.css";
+import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-tsx";
 
 const CardTabComponent = () => {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    Prism.highlightAll();
+    if (typeof window !== "undefined") {
+      Prism.highlightAll();
+    }
   }, []);
 
   const handleCopy = () => {
@@ -69,7 +86,7 @@ const CardTabComponent = () => {
   );
 
   const renderCardWithTabs = () => (
-    <Card className="text-center p-6 shadow-md rounded-lg mt-8 border border-gray-100 w-96">
+    <Card className="text-center p-6 shadow-md rounded-lg mt-6 border border-gray-100 w-96">
       <CardContent className="flex flex-col items-center">
         <Tabs defaultValue="preview" className="w-full">
           <TabsList className="grid w-56 grid-cols-2 bg-gray-100 p-1 rounded-md mb-4 h-10">
@@ -82,11 +99,11 @@ const CardTabComponent = () => {
           </TabsList>
           {renderTabsContent(
             "preview",
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe delectus praesentium voluptatum itaque dignissimos possimus corporis aliquam iste, cum porro amet architecto, facilis impedit. Quaerat dolores sed facilis, suscipit quis."
+            "Our AI-powered platform helps you create and manage job listings with intelligent suggestions and automated optimization."
           )}
           {renderTabsContent(
             "html",
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint nulla, quo porro eum ratione expedita at quia fugit magni impedit. Adipisci cumque blanditiis officiis deserunt, necessitatibus hic earum excepturi laborum."
+            "Leveraging cutting-edge AI technology to provide a seamless experience for both employers and candidates."
           )}
         </Tabs>
       </CardContent>
@@ -94,49 +111,91 @@ const CardTabComponent = () => {
   );
 
   return (
-    <div className="mt-20 mx-auto max-w-[1180px] flex justify-center items-center min-h-screen px-2">
-      <div className="w-5xl md:w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="mt-12 mx-auto max-w-[1180px] flex justify-center items-center px-4">
+      <div className="w-5xl md:w-full grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <h1 className="text-3xl mb-2 group inline-block">
-            Card with tabs
+          <h1 className="text-3xl mb-4 group inline-block">
+            AI-Powered Job Management
             <span className="text-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-500">
               {" "}
               #
             </span>
           </h1>
-          <Tabs defaultValue="preview" className="w-full mt-10">
-            <TabsList className="grid w-56 grid-cols-2 bg-gray-100 p-1 rounded-md h-10">
-              <TabsTrigger value="preview" className="h-8 text-base">
-                Preview
-              </TabsTrigger>
-              <TabsTrigger value="html" className="h-8 text-base">
-                HTML
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="preview">{renderCardWithTabs()}</TabsContent>
-            <TabsContent value="html">{renderCodeBlock()}</TabsContent>
-          </Tabs>
+          <div className="mt-6 space-y-6">
+            <div className="flex items-start space-x-4">
+              <Brain className="h-6 w-6 text-blue-600 mt-1" />
+              <div>
+                <h3 className="text-xl font-semibold">Smart Job Matching</h3>
+                <p className="text-gray-600">
+                  AI algorithms analyze job requirements and candidate profiles
+                  to find the perfect match.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-4">
+              <Users className="h-6 w-6 text-blue-600 mt-1" />
+              <div>
+                <h3 className="text-xl font-semibold">Candidate Analysis</h3>
+                <p className="text-gray-600">
+                  AI-powered tools help you evaluate candidates based on skills,
+                  experience, and cultural fit.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-4">
+              <FileText className="h-6 w-6 text-blue-600 mt-1" />
+              <div>
+                <h3 className="text-xl font-semibold">Automated Screening</h3>
+                <p className="text-gray-600">
+                  AI automatically screens applications and ranks candidates
+                  based on job requirements.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
         <div>
-          <h1 className="text-3xl mb-2 group inline-block">
-            Card with tabs
+          <h1 className="text-3xl mb-4 group inline-block">
+            Intelligent Interview Process
             <span className="text-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-500">
               {" "}
               #
             </span>
           </h1>
-          <Tabs defaultValue="preview" className="w-full mt-10">
-            <TabsList className="grid w-56 grid-cols-2 bg-gray-100 p-1 rounded-md h-10">
-              <TabsTrigger value="preview" className="h-8 text-base">
-                Preview
-              </TabsTrigger>
-              <TabsTrigger value="html" className="h-8 text-base">
-                HTML
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="preview">{renderCardWithTabs()}</TabsContent>
-            <TabsContent value="html">{renderCodeBlock()}</TabsContent>
-          </Tabs>
+          <div className="mt-6 space-y-6">
+            <div className="flex items-start space-x-4">
+              <Sparkles className="h-6 w-6 text-blue-600 mt-1" />
+              <div>
+                <h3 className="text-xl font-semibold">
+                  AI Interview Assistant
+                </h3>
+                <p className="text-gray-600">
+                  Get AI-generated interview questions tailored to each
+                  candidate's profile and experience.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-4">
+              <Users className="h-6 w-6 text-blue-600 mt-1" />
+              <div>
+                <h3 className="text-xl font-semibold">Smart Scheduling</h3>
+                <p className="text-gray-600">
+                  AI-powered calendar management that finds the best time slots
+                  for all participants.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-4">
+              <FileText className="h-6 w-6 text-blue-600 mt-1" />
+              <div>
+                <h3 className="text-xl font-semibold">Feedback Analysis</h3>
+                <p className="text-gray-600">
+                  AI analyzes interview feedback to provide insights and
+                  recommendations for hiring decisions.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
