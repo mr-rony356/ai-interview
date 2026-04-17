@@ -85,7 +85,7 @@ export default function Navbar() {
                 setOpenDropdown={setOpenDropdown}
               />
             ) : ( 
-                <NavItem href="/api/auth/login" label="Login" />
+                <NavItem href="/interviewer-dashboard" label="Dashboard" />
               )}
             </ul>
           </div>
